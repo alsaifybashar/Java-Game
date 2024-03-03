@@ -1,0 +1,28 @@
+.root {
+    -fx-background-color: black;
+    -fx-spacing: 30px;
+    -fx-font-size: 100px;
+    -fx-font-family: "Bauhaus 93";
+}
+
+
+TextField {
+    -fx-spacing: 30px;
+    -fx-text-inner-color: white;
+    -fx-background-color: black;
+}
+
+
+#bamk, label, .bamk {
+}
+
+.button {
+    -fx-font-size: 30px;
+    -fx-padding: 10;
+    -fx-border-width: 100px;
+    -fx-background-color: #CCFF99;
+}
+
+.button:hover {
+    -fx-background-color: #CCFF00;
+}

@@ -1,0 +1,141 @@
+@startuml
+
+Package game{
+
+
+class SceneManager
+
+class Entity{
+    static entityManager
+
+    abstract draw()
+    update()
+}
+
+
+abstract class Player{
+    hp
+    abstract draw()
+    move()
+}
+
+class Heavy{
+    draw()
+}
+class Speedo{
+    draw()
+}
+
+class PlayerHome
+class HeavyProjectile
+
+Enum Level {
+    DUAL
+    INVASION
+}
+
+Interface Hitbox {
+    onCollision(Entity entity)
+}
+Interface RectHitbox {
+    getRectHitbox()
+}
+Interface RoundHitbox {
+    getRoundHitbox()
+}
+
+Enum Direction {
+    UP
+    DOWN
+    LEFT
+    RIGHT
+    getX()
+    getY()
+}
+
+Enum KeySchema {
+    WASD
+    ARROWS
+    getKeySchema()
+}
+
+RectHitbox -u-|> Hitbox
+RoundHitbox -u-|> Hitbox
+
+Player .u.> Hitbox
+Heavy .u.> RectHitbox
+Speedo .u.> RoundHitbox
+Projectile .u.> RoundHitbox
+PlayerHome .u.> RectHitbox
+HeavyProjectile .u.> RectHitbox
+
+Player -u-|> Entity
+Heavy -u-|> Player
+Speedo -u-|> Player
+Projectile -u-|> Entity
+HeavyProjectile -u-|> Projectile
+
+Player -d-* KeySchema
+Player -d-* Direction
+
+SceneManager -d-* GameCore
+
+abstract class GameCore {
+    entityManager
+    update()
+    onresize()
+}
+class Dual {
+    update()
+}
+class Host {
+    update()
+}
+class Guest{
+    update()
+}
+class Invasion{
+    update()
+}
+
+Dual -u-|> GameCore
+Invasion -u-|> GameCore
+Host -u-|> GameCore
+Guest -u-|> GameCore
+Player -d-* Projectile
+
+GameCore -d-* Player
+Invasion -d-* PlayerHome
+GameCore -d-* Level
+
+class EntityManager
+
+EntityManager -d-* Entity
+GameCore -d-* EntityManager
+
+
+}
+
+
+
+
+package server{
+class P2P
+class Server
+class Client
+class P2PThread
+enum Multiplayer
+Server -u-|> P2P
+Client -u-|> P2P
+P2PThread --* P2P
+Multiplayer --* P2PThread
+Multiplayer --* P2P
+Multiplayer --* Server
+Multiplayer --* Client
+Host -l-* Multiplayer
+Guest -l-* Multiplayer
+Host --* Server
+Guest --* Client
+}
+
+@enduml
